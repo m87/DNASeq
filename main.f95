@@ -4,6 +4,7 @@ program DNASeq
     integer(kind =4) :: n,k,i
     character(len = 1), dimension(:,:), allocatable :: chip
     character(len=1), dimension(:), allocatable:: DNA
+    real t1,t2
 
     read(*,*) n
     read(*,*) k
@@ -13,7 +14,15 @@ program DNASeq
     do,i=0,n+1
     read(*,"(a1)",advance="no") DNA(i)
     end do
+    
+    call CPU_TIME(t1)
     chip= gen_classic(DNA,n,k)
+
+
+    call CPU_TIME(t2)
+
+    write(*,*) T2
+    
     call pirnt_chip(chip,n,k)
 
 
