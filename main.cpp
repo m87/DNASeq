@@ -8,13 +8,15 @@ using namespace std;
 
 string DNA;
 int n,k;
-vector<string> chip, nchip;
+vector<string> chip, nchip,rn;
 map<string, vector<string> > mchip;
 map<string, vector<string> >::const_iterator itr;
 
 void get_chip();
 void get_nchip();
 void make_chip();
+void check_rep();
+
 
 int main(int argc, char *argv[])
 {
@@ -32,6 +34,9 @@ int main(int argc, char *argv[])
 
     make_chip();
 
+    check_rep();
+
+
     for(itr = mchip.begin(); itr!=mchip.end();++itr){
         cout << (*itr).first << " ";
         for(int i=0; i<(*itr).second.size();i++)
@@ -42,12 +47,39 @@ int main(int argc, char *argv[])
     for(int i=0;i<n-2*k+2;i++)
         cout << nchip[i] << endl;
 
+    cout << endl;
+    for(int i=0;i<rn.size();i++)
+        cout << rn[i] << endl;
 
+    chip.clear();
+    nchip.clear();
+    rn.clear();
 
     vector<string>().swap(chip);   
     vector<string>().swap(nchip);   
+    vector<string>().swap(rn);   
     mchip.clear();
     return 0;
+}
+
+void check_rep(){
+    rn = nchip;
+    bool flag=false; 
+    for(int i=0;i<rn.size();i++){
+        flag =false;
+        for(int j=0;j<rn.size();j++){
+            if(i==j) continue;
+            if(rn[i]==rn[j]){
+                rn.erase(rn.begin()+j);
+                j--;
+                flag=true;
+            }
+                
+        }
+     if(!flag) {rn.erase(rn.begin()+i);i--;}
+    }
+
+
 }
 
 
@@ -95,5 +127,6 @@ void make_chip(){
         mchip.insert(pair<string, vector<string> >(chip[i],tmp));        
     }
 
+    vector<string>().swap(tmp);   
 }
 
