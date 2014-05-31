@@ -60,7 +60,7 @@ void get_initUsedN() {
         usedn.insert(pair<string, int >(nchip[i],0));
     }
 }
-
+//veryfikacja z częscią nieklasyczną chipu
 bool verifyN(string cur) {
     if(solution.length()<2*k-1) return true;
     for(itr3=usedn.begin(); itr3!=usedn.end(); ++itr3) {
@@ -86,7 +86,7 @@ bool verify(string cur) {
         return false;
     }
 }
-
+//generowanie kandydatow
 bool getCandidates(string cur) {
     if(reverted) return true;
     vector<string> tmp;
@@ -102,17 +102,7 @@ bool getCandidates(string cur) {
     else
         return true;
 }
-
-bool pretest(){
-
-    int sum=0;
-for(itr3 = used.begin(); itr3!=used.end(); ++itr3)
-    {
-        sum += itr3->second;
-    }
-return false;
-}
-
+//test rozwiązania
 bool test() {
     int sum=0;
     for(itr3 = used.begin(); itr3!=used.end(); ++itr3)
@@ -127,7 +117,7 @@ bool test() {
     }
     return true;
 }
-
+//nawrót
 bool revert() {
     reverted = true;
     if(canditates.back().size()==0) {
