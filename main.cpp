@@ -1,11 +1,17 @@
 #include <fstream>
 #include <iostream>
+#include <ctime>
 #include "gen.h"
 
 //#define DEBUG
 
 using namespace std;
 
+clock_t start,st;
+
+
+int sumUsed =0;
+int sumNUsed =0;
 string DNA;
 int n,k;
 vector<string> chip, nchip,rn,r;
@@ -107,9 +113,19 @@ bool getCandidates(string cur) {
     else
         return true;
 }
+
+bool check(){
+
+if(k-1+sumUsed+sumNUsed > n)
+    return false;
+else
+    return true;
+
+
+}
+
 //test rozwiązania
 bool test() {
-    int sum=0;
     for(itr3 = used.begin(); itr3!=used.end(); ++itr3)
     {
         if(itr3->second==0)
@@ -128,6 +144,8 @@ bool revert() {
     if(canditates.back().size()==0) {
         canditates.pop_back();
         used[current]--;
+        sumUsed--;
+        sumNUsed++;
         usedn[getlast(solution,k)]--;
         rev.pop_back();
         current=rev.back();
@@ -137,6 +155,8 @@ bool revert() {
     }
 
     if(!flag) {
+        sumUsed--;
+        sumNUsed++;
         canditates.back().pop_back();
         rev.pop_back();
         used[current]--;
@@ -169,6 +189,8 @@ void  alg() {
                 current = canditates.back().back();
                 rev.push_back(current);
                 used[current]++;
+                sumUsed++;
+                sumNUsed--;
                 solution+=current[current.length()-1];
                 usedn[getlast(solution,k)]++;
                 reverted = false;
@@ -186,6 +208,11 @@ void  alg() {
                         if(!revert())
                             break;
                     }
+                }else{
+                    if(!check())
+                         if(!revert())
+                               break;
+
                 }
             }
             else {
@@ -229,9 +256,10 @@ int main(int argc, char *argv[])
     get_initUsed();
     get_initUsedN();
 
-
+start = clock();
     alg();
-
+st = clock();
+cout << "Time elapsed " << (double) (st - start) / CLOCKS_PER_SEC << endl;
 /*    for(itr=mchip.begin();itr!=mchip.end();++itr){
         cout << itr->first << "::" ;
         for(int i =0;i < itr->second.size();i++)
