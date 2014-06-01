@@ -26,9 +26,14 @@ map<string,int> used, usedn;
 string solution;
 
 void printINFO() {
-    cout << "current: " << current << endl;
-    cout << "solution[" << solution.length() << ":" << solution << endl;
-    cout << "getLast: " << getlast(solution,k) << endl;
+
+   // cout << "current: " << current << endl;
+for(int i =0; i<r.size();i++)
+    cout << r[i] << "-" ;
+cout <<endl;
+    
+    //    cout << "solution[" << solution.length() << ":" << solution << endl;
+  //  cout << "getLast: " << getlast(solution,k) << endl;
 /*    cout << "-----------used-----------" << endl;
     for(itr3 = used.begin(); itr3!=used.end(); ++itr3)
         cout << itr3->first << "::" << itr3->second << endl;
@@ -84,7 +89,7 @@ bool verify(string cur) {
         return verifyN(cur);
     } else {
         return false;
-    }
+   }
 }
 //generowanie kandydatow
 bool getCandidates(string cur) {
@@ -153,20 +158,12 @@ void  alg() {
     used[current]++;
     while(stop) {
         #ifdef DEBUG
-        cout << "-------------_STEP -------" <<endl;
+        //cout << "-------------_STEP -------" <<endl;
         printINFO();
         #endif
 
         if(getCandidates(current)) {
  
-              cout << "-----------CANDIDATES------------" << endl;
-    if(canditates.size()>0){
-    for(int i=0;i<canditates.back().size();i++)
-        cout << canditates.back()[i] << "::";
-    cout <<endl;
-    }
-    cout << "--------------------------" << endl;
-
             
             if(canditates.back().size()>0) {
                 current = canditates.back().back();
@@ -234,6 +231,16 @@ int main(int argc, char *argv[])
 
 
     alg();
+
+/*    for(itr=mchip.begin();itr!=mchip.end();++itr){
+        cout << itr->first << "::" ;
+        for(int i =0;i < itr->second.size();i++)
+            cout << itr->second[i] << "-" ;
+        cout << endl;
+
+    }
+
+*/
 
 
     string res = DNA.substr(0,n);

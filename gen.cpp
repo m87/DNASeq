@@ -34,7 +34,7 @@ void check_rep(vector<string>& rn, vector<string>& r, const vector<string>& nchi
             i--;
         }
     }
-    flag=false;
+/*    flag=false;
     for(int i=0; i<r.size(); i++) {
         flag =false;
         for(int j=0; j<r.size(); j++) {
@@ -52,7 +52,7 @@ void check_rep(vector<string>& rn, vector<string>& r, const vector<string>& nchi
         }
     }
 
-
+*/
 
 }
 
