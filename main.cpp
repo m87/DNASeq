@@ -33,12 +33,9 @@ string solution;
 
 void printINFO() {
 
-   // cout << "current: " << current << endl;
-for(int i =0; i<r.size();i++)
-    cout << r[i] << "-" ;
-cout <<endl;
+   cout << "current: " << current << endl;
     
-    //    cout << "solution[" << solution.length() << ":" << solution << endl;
+    //   cout << "solution[" << solution.length() << ":" << solution << endl;
   //  cout << "getLast: " << getlast(solution,k) << endl;
 /*    cout << "-----------used-----------" << endl;
     for(itr3 = used.begin(); itr3!=used.end(); ++itr3)
@@ -49,14 +46,14 @@ cout <<endl;
         cout << itr3->first << "::" << itr3->second << endl;
     cout << "--------------------------" << endl;
    */ 
-  /*  cout << "-----------CANDIDATES------------" << endl;
+    cout << "-----------CANDIDATES------------" << endl;
     if(canditates.size()>0){
     for(int i=0;i<canditates.back().size();i++)
         cout << canditates.back()[i] << "::";
     cout <<endl;
     }
     cout << "--------------------------" << endl;
-*/
+
     }
 
 void get_initUsed() {
@@ -141,7 +138,8 @@ bool test() {
 //nawrót
 bool revert() {
     reverted = true;
-    if(canditates.back().size()==0) {
+
+   //    if(canditates.back().size()==0) {
         canditates.pop_back();
         used[current]--;
         sumUsed--;
@@ -152,11 +150,16 @@ bool revert() {
         solution = solution.substr(0,solution.length()-1);
         canditates.back().pop_back();
         return true;
-    }
+ //   }
+    
+    
+}
 
-    if(!flag) {
+bool revertspec(){
+    reverted = true;
         sumUsed--;
         sumNUsed++;
+        //canditates.pop_back();
         canditates.back().pop_back();
         rev.pop_back();
         used[current]--;
@@ -165,10 +168,13 @@ bool revert() {
         flag=true;
         solution = solution.substr(0,solution.length()-1);
         return true;
-    }
-    
-    return false;
+
+
+
+
+
 }
+
 
 
 void  alg() {
@@ -182,6 +188,7 @@ void  alg() {
         printINFO();
         #endif
 
+        //cout << rev.size() << endl;
         if(getCandidates(current)) {
  
             
@@ -195,43 +202,35 @@ void  alg() {
                 usedn[getlast(solution,k)]++;
                 reverted = false;
                 if(solution.length() ==n) {
-                    if((flag=test())) {
+                    if(test()) {
                         solutions.push_back(solution);
-                        if(!revert())
-                            break;
+                    revertspec(); 
                     } else {
 
                         #ifdef DEBUG
                         cout << "false test revert" <<endl;
                         #endif
-                        
-                        if(!revert())
-                            break;
+                    
+                        revertspec();
                     }
                 }else{
-                    if(!check())
-                         if(!revert())
-                               break;
-
+                   if(!check())
+                        revertspec();
                 }
             }
             else {
-                if(canditates.size()==1) break;
+                if(canditates.size()==1 && canditates.back().size()==0) break;
                 #ifdef DEBUG
                 cout << "no canditates in past revert" << endl;
                 #endif
-                if(!revert()) {
-                    break;
-                }
+                revert();
             }
         }
         else {
             #ifdef DEBUG
             cout << "no canditates revert" << endl;
             #endif
-            if(!revert()) {
-                break;
-            }
+            revert();
         }
     }
 }
@@ -272,15 +271,16 @@ cout << "Time elapsed " << (double) (st - start) / CLOCKS_PER_SEC << endl;
 
 
     string res = DNA.substr(0,n);
-
+    
     for(int i =0 ; i<solutions.size(); i++)
+    
     {
+        cout << solutions[i].length() << endl;
         cout << solutions[i] << endl;
         if(res==solutions[i])
             cout << "+++++++++++++OK+++++++++++++" << endl;
         else {
             cout << "error" << endl;
-            cout << solutions[i] << endl;
         }
 
 
